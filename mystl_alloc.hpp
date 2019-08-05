@@ -11,9 +11,6 @@
 
 #include <cstdlib>      /* malloc(), free(), realloc() */
 
-namespace mystl
-{
-
 #if 0
 #include <new>
 #define     __THROW_BAD_ALLOC       throw bad_alloc
@@ -21,6 +18,9 @@ namespace mystl
 #include <iostream>
 #define     __THROW_BAD_ALLOC       std::cerr << "out of memory" << std::endl; exit(1)
 #endif
+
+namespace mystl
+{
 
 class malloc_alloc {
 private:
