@@ -75,7 +75,7 @@ iterator_category(const Iterator&)
     return category();
 }
 
-/* return Iterator's difference_type */
+/* return Iterator's difference_type* */
 template <typename Iterator>
 inline typename iterator_traits<Iterator>::difference_type*
 difference_type(const Iterator&)
@@ -83,9 +83,9 @@ difference_type(const Iterator&)
     return static_cast<typename iterator_traits<Iterator>::difference_type*>(0);
 }
 
-/* return Iterator's value_type */
+/* return Iterator's value_type* */
 template <typename Iterator>
-inline typename iterator_traits<Iterator>::value_type
+inline typename iterator_traits<Iterator>::value_type*
 value_type(const Iterator&)
 {
     return static_cast<typename iterator_traits<Iterator>::value_type*>(0);
