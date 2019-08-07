@@ -25,13 +25,6 @@ namespace mystl
  * last  指向输入端（欲复制的空间的）结束处（前闭后开区间）
  * result指向输出端（欲初始化空间的）起始处
  * 先利用 iterator_traits 萃取出迭代器 result 的 value_type, 然后判断是否为 POD 型别 */
-template <typename InputIterator, typename ForwardIterator>
-inline ForwardIterator 
-uninitialized_copy(InputIterator first, InputIterator last, ForwardIterator result)
-{
-    __uninitialized_copy(first, last, result, value_type(result));
-}
-
 template <typename InputIterator, typename ForwardIterator, typename T>
 inline ForwardIterator
 __uninitialized_copy(InputIterator first, InputIterator last, 
@@ -39,6 +32,13 @@ __uninitialized_copy(InputIterator first, InputIterator last,
 {
     typedef typename __type_traits<T>::is_POD_type is_POD;
     return __uninitialized_copy_aux(first, last, result, is_POD());
+}
+
+template <typename InputIterator, typename ForwardIterator>
+inline ForwardIterator 
+uninitialized_copy(InputIterator first, InputIterator last, ForwardIterator result)
+{
+    __uninitialized_copy(first, last, result, value_type(result));
 }
 
 /* 如果型别是 POD 类型，则采取 mystl 算法 copy() 最有效率
@@ -81,18 +81,18 @@ inline wchar_t* uninitialized_copy(const wchar_t* first,
  * last  指向输出端（欲初始化空间的）结束处（前闭后开区间）
  * x 为指定的初值 
  * 先利用 iterator_traits 萃取出迭代器 first 的 value_type, 然后判断是否为 POD 型别 */
-template <typename ForwardIterator, typename T>
-inline void uninitialized_fill(ForwardIterator first, ForwardIterator last, const T& x)
-{
-    __uninitialized_fill(first, last, x, value_type(first));
-}
-
 template <typename ForwardIterator, typename T, typename T2>
 inline void __uninitialized_fill(ForwardIterator first, ForwardIterator last, 
         const T& x, T2*)
 {
     typedef typename __type_traits<T2>::is_POD_type is_POD;
     __uninitialized_fill_aux(first, last, x, is_POD());
+}
+
+template <typename ForwardIterator, typename T>
+inline void uninitialized_fill(ForwardIterator first, ForwardIterator last, const T& x)
+{
+    __uninitialized_fill(first, last, x, value_type(first));
 }
 
 /* 如果型别是 POD 类型，则采取 mystl 算法 fill() 最有效率
@@ -120,19 +120,19 @@ inline void __uninitialized_fill_aux(ForwardIterator first, ForwardIterator last
  * n 表示欲初始化空间的大小
  * x 为指定的初值 
  * 先利用 iterator_traits 萃取出迭代器 first 的 value_type, 然后判断是否为 POD 型别 */
-template <typename ForwardIterator, typename Size, typename T>
-inline ForwardIterator
-uninitialized_fill_n(ForwardIterator first, Size n, const T& x)
-{
-    return __uninitialized_fill_n(first, n, x, value_type(first));
-}
-
 template <typename ForwardIterator, typename Size, typename T, typename T2>
 inline ForwardIterator
 __uninitialized_fill_n(ForwardIterator first, Size n, const T& x, T2*)
 {
     typedef typename __type_traits<T2>::is_POD_type is_POD;
     __uninitialized_fill_n_aux(first, n, x, is_POD());
+}
+
+template <typename ForwardIterator, typename Size, typename T>
+inline ForwardIterator
+uninitialized_fill_n(ForwardIterator first, Size n, const T& x)
+{
+    return __uninitialized_fill_n(first, n, x, value_type(first));
 }
 
 /* 如果型别是 POD 类型，则采取 mystl 算法 fill_n() 最有效率

@@ -151,7 +151,7 @@ void vector<T, Alloc>::insert(iterator position, const T& x)
         iterator new_finish = new_start;
         try {
             /* 拷贝原 vector 内容到新的 vector 中 */
-            new_finish = uninitialized_copy(start, finish, new_start);
+            new_finish = uninitialized_copy(start, position, new_start);
             construct(new_finish, x);
             ++new_finish;
             new_finish = uninitialized_copy(position, finish, new_finish);
