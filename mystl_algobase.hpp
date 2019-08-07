@@ -134,6 +134,44 @@ inline T* __copy_t(const T* first, const T* last, T* result, __false_type)
 }
 
 
+/* copy_backward() */
+//! 没有进行效率上的优化
+template <typename BidirectionalIterator1, typename BidirectionalIterator2>
+BidirectionalIterator2 copy_backward(BidirectionalIterator1 first,
+        BidirectionalIterator1 last, BidirectionalIterator2 result)
+{
+    while (last != first)
+        *(--result) = *(--last);
+    return result;
+}
+
+  
+/* max() */
+template <typename T>
+inline const T& max(const T& a, const T& b)
+{
+    return a < b ? b : a;
+}
+
+template <typename T, typename Compare>
+inline const T& max(const T& a, const T& b, Compare comp)
+{
+    return comp(a, b) ? b : a;
+}
+
+/* min() */
+template <typename T>
+inline const T& min(const T& a, const T& b)
+{
+    return a < b ? a : b;
+}
+
+template <typename T, typename Compare>
+inline const T& min(const T& a, const T& b, Compare comp)
+{
+    return comp(a, b) ? a : b;
+}
+
 }
 
 #endif
