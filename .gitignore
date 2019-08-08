@@ -1,4 +1,8 @@
 a.out
 *.swp
 *.gch
+ref*
+ref*/
+question
+question*/
 test*/
