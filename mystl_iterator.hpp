@@ -19,6 +19,8 @@
 
 namespace mystl
 {
+
+/* classes */
 struct input_iterator_tag {};
 struct output_iterator_tag {};
 struct forward_iterator_tag {};
@@ -66,6 +68,7 @@ struct iterator_traits<const T*> {
     typedef const T&                    reference;
 };
 
+/* functions */
 /* return Iterator's iterator_category */
 template <typename Iterator>
 inline typename iterator_traits<Iterator>::iterator_category
@@ -89,6 +92,33 @@ inline typename iterator_traits<Iterator>::value_type*
 value_type(const Iterator&)
 {
     return static_cast<typename iterator_traits<Iterator>::value_type*>(0);
+}
+
+
+/* distance() */
+template <typename InputIterator>
+inline typename iterator_traits<InputIterator>::difference_type
+__distance(InputIterator first, InputIterator last, input_iterator_tag)
+{
+    typename iterator_traits<InputIterator>::difference_type n = 0;
+    while (first != last) {
+        ++first; ++n;
+    }
+    return n;
+}
+
+template <typename InputIterator>
+inline typename iterator_traits<InputIterator>::difference_type
+__distance(InputIterator first, InputIterator last, random_access_iterator_tag)
+{
+    return last - first;
+}
+
+template<class InputIterator>
+inline typename iterator_traits<InputIterator>::difference_type
+distance(InputIterator first, InputIterator last)
+{
+    return __distance(first, last, iterator_category(first));
 }
 
 }
