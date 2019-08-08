@@ -21,10 +21,13 @@ namespace mystl
 template <typename T, typename Alloc = alloc>
 class vector {
 public:
-    typedef T               value_type;
-    typedef T*              pointer;
-    typedef T&              reference;
-    typedef ptrdiff_t       difference_type;
+    /* 以下定义仅仅用于本 class，与iterator_traits没有关系。
+     * 当容器的iterator是一个原生指针时（就像本vector容器），
+     * iterator_traits提取的型别只与从模板传入的的类型有关。*/
+    typedef T                               value_type;
+    typedef T*                              pointer;
+    typedef T&                              reference;
+    typedef ptrdiff_t                       difference_type;
 
     typedef size_t          size_type;
     typedef value_type*     iterator;       /* vector 的迭代器是普通指针 */
