@@ -96,6 +96,14 @@ value_type(const Iterator&)
 
 
 /* distance() */
+template<class InputIterator>
+inline typename iterator_traits<InputIterator>::difference_type
+distance(InputIterator first, InputIterator last)
+{
+    typedef typename iterator_traits<InputIterator>::iterator_category category;
+    return __distance(first, last, category());
+}
+
 template <typename InputIterator>
 inline typename iterator_traits<InputIterator>::difference_type
 __distance(InputIterator first, InputIterator last, input_iterator_tag)
@@ -107,18 +115,24 @@ __distance(InputIterator first, InputIterator last, input_iterator_tag)
     return n;
 }
 
-template <typename InputIterator>
-inline typename iterator_traits<InputIterator>::difference_type
-__distance(InputIterator first, InputIterator last, random_access_iterator_tag)
+template <typename BidirectionalIterator>
+inline typename iterator_traits<BidirectionalIterator>::difference_type
+__distance(BidirectionalIterator first, BidirectionalIterator last,
+        bidirectional_iterator_tag)
 {
-    return last - first;
+    typename iterator_traits<BidirectionalIterator>::difference_type n = 0;
+    while (first != last) {
+        ++first; ++n;
+    }
+    return n;
 }
 
-template<class InputIterator>
-inline typename iterator_traits<InputIterator>::difference_type
-distance(InputIterator first, InputIterator last)
+template <typename RandomAccessIterator>
+inline typename iterator_traits<RandomAccessIterator>::difference_type
+__distance(RandomAccessIterator first, RandomAccessIterator last,
+        random_access_iterator_tag)
 {
-    return __distance(first, last, iterator_category(first));
+    return last - first;
 }
 
 }

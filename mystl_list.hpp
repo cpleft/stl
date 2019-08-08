@@ -52,7 +52,7 @@ struct __list_iterator {
     bool operator== (const self& x) const { return node == x.node; }
     bool operator!= (const self& x) const { return node != x.node; }
 
-    reference operator* () const { return *(node).data; }
+    reference operator* () const { return (*node).data; }
 
     pointer operator-> () const { return &(operator*()); }
 
@@ -100,7 +100,7 @@ public:
     typedef T&              reference;
     typedef const T&        const_reference;
     typedef typename iterator_traits<iterator>::difference_type  difference_type;
-    typedef typename iterator_traits<iterator>::size_type        size_type;
+    typedef typename iterator::size_type    size_type;
 
 protected:
     /* 空间置配 */
@@ -124,8 +124,8 @@ protected:
     link_type head;
 
 public:
-    iterator begin() { return (link_type) (head->next);  }
-    iterator end() { return head; }
+    iterator begin() const { return (link_type) (head->next);  }
+    iterator end() const { return head; }
     bool empty() const { return head->next == head; }
     size_type size() const 
     {
@@ -133,8 +133,8 @@ public:
         result = distance(begin(), end());
         return result;
     }
-    reference front() { return *(begin()); }
-    reference back() { return *(--end()); }
+    reference front() const { return *(begin()); }
+    reference back() const { return *(--end()); }
 
 public:
     list() { empty_initialize(); }      /* 产生一个空链表 */
@@ -158,7 +158,7 @@ public:
         //!
         typename list<value_type>::iterator xit = x.begin();
         for (; xit != x.end(); ++xit) {
-            insert(this->end(), *(xit));
+            insert(end(), *(xit));
         }
     }
     ~list()
