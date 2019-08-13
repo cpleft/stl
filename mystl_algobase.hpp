@@ -172,6 +172,23 @@ inline const T& min(const T& a, const T& b, Compare comp)
     return comp(a, b) ? a : b;
 }
 
+
+/* gcd */
+  long long __gcd(long long x, long long y)
+  {
+    if (x < y) {
+      long long tmp = x;
+      x = y;
+      y = x;
+    }
+    while (x%y != 0) {
+      long long tmp = x;
+      x = y;
+      y = tmp%y;
+    }
+    return y;
+  }
+
 }
 
 #endif
