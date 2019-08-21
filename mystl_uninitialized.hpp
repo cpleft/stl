@@ -13,7 +13,7 @@
 #include "mystl_type_traits.hpp"    /* __true_type{}, __false_type __type_traits<>{} */
 #include "mystl_iterator.hpp"       /* value_type() */
 #include "mystl_construct.hpp"      /* construct() */
-#include "mystl_algobase.hpp"       /* copy(), fill(), fill_n() */ //!
+#include "mystl_algobase.hpp"       /* copy(), fill(), fill_n() */
 
 #include <cstring>          /* memmove() */
 
@@ -38,7 +38,7 @@ template <typename InputIterator, typename ForwardIterator>
 inline ForwardIterator 
 uninitialized_copy(InputIterator first, InputIterator last, ForwardIterator result)
 {
-    __uninitialized_copy(first, last, result, value_type(result));
+    return __uninitialized_copy(first, last, result, value_type(result));
 }
 
 /* 如果型别是 POD 类型，则采取 mystl 算法 copy() 最有效率
@@ -125,7 +125,7 @@ inline ForwardIterator
 __uninitialized_fill_n(ForwardIterator first, Size n, const T& x, T2*)
 {
     typedef typename __type_traits<T2>::is_POD_type is_POD;
-    __uninitialized_fill_n_aux(first, n, x, is_POD());
+    return __uninitialized_fill_n_aux(first, n, x, is_POD());
 }
 
 template <typename ForwardIterator, typename Size, typename T>

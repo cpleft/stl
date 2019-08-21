@@ -21,15 +21,16 @@ namespace mystl
 template <typename T, typename Alloc = alloc>
 class vector {
 public:
-    /* 以下定义仅仅用于本 class，与iterator_traits没有关系。
-     * 当容器的iterator是一个原生指针时（就像本vector容器），
-     * iterator_traits提取的型别只与从模板传入的的类型有关。*/
+    /* 以下定义仅仅用于本 class，与iterator_traits没有关系。*/
     typedef T                               value_type;
     typedef T*                              pointer;
     typedef T&                              reference;
     typedef ptrdiff_t                       difference_type;
 
     typedef size_t          size_type;
+
+    /* 当容器的iterator是一个原生指针时（就像本vector容器），
+     * iterator_traits提取的型别只与从模板传入的的类型有关。*/
     typedef value_type*     iterator;       /* vector 的迭代器是普通指针 */
     /* operator*, operator->, operator++, operator--, operator+, operator-
      * operator+=, operator-= 这些操作普通指针天生具备 
@@ -63,11 +64,22 @@ public:
     reference operator[] (size_type n) { return *(begin() + n); }
 
 public:
+    /* 这些构造函数目前并没有考虑用户自定义alloc的情况 */
     vector() : start(0), finish(0), end_of_storage(0) {}
     vector(size_type n, const T& value) { fill_initialize(n, value); }
     vector(int n, const T& value) { fill_initialize(n, value); }
     vector(long n, const T& value) { fill_initialize(n, value); }
     explicit vector(size_type n) { fill_initialize(n, T()); }
+    template <typename InputIterator>
+        vector(InputIterator first, InputIterator last)
+        {
+            start = allocate_and_fill(1, T());
+            finish = start;
+            end_of_storage = finish+1;
+            for (; first != last; ++first) {
+                push_back(*first);
+            }
+        }
     ~vector() 
     {
         destroy(start, finish);             /* mystl_construct.hpp */

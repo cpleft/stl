@@ -47,6 +47,7 @@ public:
     static void* reallocate(void* p, size_t /* old_sz */, size_t new_sz)
     {
         void* result = realloc(p, new_sz);
+        return result;
     }
 
     static void (*set_malloc_handler(void (*f)()))()
