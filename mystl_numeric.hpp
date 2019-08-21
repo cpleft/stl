@@ -44,7 +44,7 @@ namespace mystl
                 *result = prev = *first;
                 while (++first != last) {
                     val = *first;
-                    *++result = prev-val;
+                    *++result = val-prev;
                     prev = val;
                 }
                 ++result;
@@ -73,7 +73,7 @@ namespace mystl
                 InputIterator2 first2, T init)
         {
             while (first1 != last1) {
-                init += (*first)*(*first2);
+                init = init+(*first1)*(*first2);
                 ++first1;
                 ++first2;
             }
