@@ -1,6 +1,7 @@
 a.out
 *.swp
 *.gch
+tags
 ref*
 ref*/
 question
