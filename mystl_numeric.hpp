@@ -10,7 +10,7 @@
 #define	    _MYSTL_NUMERIC_
 
 #include "mystl_iterator.hpp"   /* iterator_category(), distance_type, Distance */
-#include "mystl_type_traits.hpp"/* __type_traits<>{}, __true_type{}, __false_type{} */
+#include "mystl_type_traits.hpp"/* iterator_traits{}, __type_traits<>{}, __true_type{}, __false_type{} */
 
 #include <cstddef>      /* ptrdiff_t */
 
@@ -35,8 +35,96 @@ namespace mystl
             return init;
         }
 
-
+    template <typename InputIterator, typename OutputIterator>
+        OutputIterator adjacent_difference(InputIterator first, InputIterator last,
+                OutputIterator result)
+        {
+            if (first != last) {
+                typename iterator_traits<InputIterator>::value_type prev, val;
+                *result = prev = *first;
+                while (++first != last) {
+                    val = *first;
+                    *++result = prev-val;
+                    prev = val;
+                }
+                ++result;
+            }
+            return result;
+        }
+    template <typename InputIterator, typename OutputIterator, typename BinaryOperation>
+        OutputIterator adjacent_difference(InputIterator first, InputIterator last,
+                OutputIterator result, BinaryOperation binary_op)
+        {
+            if (first != last) {
+                typename iterator_traits<InputIterator>::value_type prev, val;
+                *result = prev = *first;
+                while (++first != last) {
+                    val = *first;
+                    *++result = binary_op(val, prev);
+                    prev = val;
+                }
+                ++result;
+            }
+            return result;
+        }
     
+    template <typename InputIterator1, typename InputIterator2, typename T>
+        T inner_product (InputIterator1 first1, InputIterator1 last1,
+                InputIterator2 first2, T init)
+        {
+            while (first1 != last1) {
+                init += (*first)*(*first2);
+                ++first1;
+                ++first2;
+            }
+            return init;
+        }
+    template <typename InputIterator1, typename InputIterator2, typename T,
+            typename BinaryOperation1, typename BinaryOperation2>
+        T inner_product (InputIterator1 first1, InputIterator1 last1,
+                InputIterator2 first2, T init,
+                BinaryOperation1 binary_op1,
+                BinaryOperation2 binary_op2)
+        {
+            while (first1 != last1) {
+                init = binary_op1(init, binary_op2(*first1, *first2));
+                ++first1;
+                ++first2;
+            }
+            return init;
+        }
+
+    template <typename InputIterator, typename OutputIterator>
+        OutputIterator partial_sum (InputIterator first, InputIterator last,
+                OutputIterator result)
+        {
+            if (first != last) {
+                typename iterator_traits<InputIterator>::value_type val;
+                *result = val = *first;
+                while (++first != last) {
+                    val = val+*first;
+                    *++result = val;
+                }
+                ++result;
+            }
+            return result;
+        }
+    template <typename InputIterator, typename OutputIterator,
+            typename BinaryOperation>
+        OutputIterator partial_sum (InputIterator first, InputIterator last,
+                OutputIterator result, BinaryOperation binary_op)
+        {
+            if (first != last) {
+                typename iterator_traits<InputIterator>::value_type val;
+                *result = val = *first;
+                while (++first != last) {
+                    val = binary_op(val, *first);
+                    *++result = val;
+                }
+                ++result;
+            }
+            return result;
+        }
 }
 
 #endif
