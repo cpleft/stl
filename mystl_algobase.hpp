@@ -18,7 +18,41 @@
 namespace mystl
 {
 
-/* fill() */
+
+/* Non-modifying sequence operations: */
+
+/* equal */
+template <typename InputIterator1, typename InputIterator2>
+bool equal(InputIterator1 first1, InputIterator1 last1,
+        InputIterator2 first2)
+{
+    //! 没有范围控制
+    for (; first1 != last1; ++first1, ++first2) {
+        if (*first1 != *first2)
+            return false;
+    }
+    return true;
+}
+template <typename InputIterator1, typename InputIterator2,
+         typename BinaryPredicate>
+bool equal(InputIterator1 first1, InputIterator1 last1,
+        InputIterator2 first2, BinaryPredicate binary_pred)
+{
+    //! 没有范围控制
+    for (; first1 != last1; ++first1, ++first2) {
+        if (!binary_pred(*first1, *first2))
+            return false;
+    }
+    return true;
+}
+
+
+
+
+
+/* Modifying sequence operations: */
+
+/* fill */
 template <typename ForwardIterator, typename T>
 void fill(ForwardIterator first, ForwardIterator last, const T& value)
 {
@@ -26,7 +60,7 @@ void fill(ForwardIterator first, ForwardIterator last, const T& value)
         *first = value;
 }
 
-/* fill_n() */
+/* fill_n */
 template <typename OutputIterator, typename Size, typename T>
 OutputIterator fill_n(OutputIterator first, Size n, const T& value)
 {
@@ -36,6 +70,7 @@ OutputIterator fill_n(OutputIterator first, Size n, const T& value)
 }
 
 
+/* copy */
 /* __copy_dispatch<>{} 完全泛化版本 */
 template <typename InputIterator, typename OutputIterator>
 struct __copy_dispatch {
