@@ -1,13 +1,13 @@
-/* file		: mystl_algorithm.hpp 
+/* file		: mystl_algobase.hpp 
  * by		: waterlemon	429426523@qq.com
  * date		: 2019年 08月 06日 星期二 13:03:39 CST
  * last update	: 
  * 
- * description	: copy(), fill(), fill_n()
+ * description	: base algo
  */
 
-#ifndef	    _MYSTL_ALGORITHM_
-#define	    _MYSTL_ALGORITHM_
+#ifndef	    _MYSTL_ALGOBASE_
+#define	    _MYSTL_ALGOBASE_
 
 #include "mystl_iterator.hpp"   /* iterator_category(), distance_type, Distance */
 #include "mystl_type_traits.hpp"/* __type_traits<>{}, __true_type{}, __false_type{} */
