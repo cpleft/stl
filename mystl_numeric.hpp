@@ -125,6 +125,15 @@ namespace mystl
             }
             return result;
         }
+
+    template <typename InputIterator, typename T>
+        void iota(InputIterator first, InputIterator last,
+                T value)
+        {
+            while (first != last) {
+                *first++ = value++;
+            }
+        }
 }
 
 #endif
