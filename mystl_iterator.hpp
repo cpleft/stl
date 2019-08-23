@@ -115,18 +115,6 @@ __distance(InputIterator first, InputIterator last, input_iterator_tag)
     return n;
 }
 
-template <typename BidirectionalIterator>
-inline typename iterator_traits<BidirectionalIterator>::difference_type
-__distance(BidirectionalIterator first, BidirectionalIterator last,
-        bidirectional_iterator_tag)
-{
-    typename iterator_traits<BidirectionalIterator>::difference_type n = 0;
-    while (first != last) {
-        ++first; ++n;
-    }
-    return n;
-}
-
 template <typename RandomAccessIterator>
 inline typename iterator_traits<RandomAccessIterator>::difference_type
 __distance(RandomAccessIterator first, RandomAccessIterator last,
